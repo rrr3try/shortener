@@ -1,3 +1,6 @@
+dataclasses==0.6
 Django==2.2.4
+django-hashid-field==2.1.6
+hashids==1.2.0
 pytz==2019.2
-sqlparse==0.3.0
+sqlparse==0.2.4
