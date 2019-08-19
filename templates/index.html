@@ -1,0 +1,98 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/index.css" %}" />
+    <title>Hello, Stepan ;)</title>
+  </head>
+  <body>
+
+  <nav class="navbar sticky-top" style="background-color: #823fa1;">
+      <div class="btn-group container-fluid justify-content-start ">
+          <a class="navbar-brand text-white" href="https://sktl.tk">Url shortener</a>
+          <div class="dropdown">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-info">SignUp</a>
+              <div class="dropdown-menu">
+                    <form>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"></span>
+                             </div>
+
+                            <input name="" class="form-control" placeholder="login" type="text">
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"></span>
+                            </div>
+                            <input class="form-control" placeholder="password" type="password">
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"></span>
+                            </div>
+                            <input class="form-control" placeholder="Repeat pass" type="password">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+                        </div> <!-- form-group// -->
+                    </form>
+              </div>
+           </div>
+          <div class="dropdown">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-outline-info"><b class="text-white">SignIn</b></a>
+              <div class="dropdown-menu">
+                    <form>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"></span>
+                             </div>
+
+                            <input name="" class="form-control" placeholder="login" type="text">
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"></span>
+                            </div>
+                            <input class="form-control" placeholder="password" type="password">
+                        </div> <!-- form-group// -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                        </div> <!-- form-group// -->
+                    </form>
+              </div>
+           </div>
+      </div>
+  </nav>
+    <div class="card-header card">
+        <div class="justify-content-end col-xs-12 col-sm-10 col-md-8">
+            <form class="form-group input-group" method="POST">
+                {% csrf_token %}
+                <input name="" class="form-control text-center" placeholder="Your URL" type="url">
+                {{ url_form }}
+                <button class="btn btn-primary" > shorten URL </button>
+            </form>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Your urls</div>
+        <div class="card-body row">
+            <li class="col-6 col-xs-4 col-md-2">Your url</li>
+            <a href="sktl.tk">sktl.tk/aIdZ</a>
+            <a href="#" class="btn btn-primary m-3">copy</a>
+        </div>
+    </div>
+    <div class="card">
+       <div class="card-body row">
+           <li class="col-6 col-xs-4 col-md-2">Your url</li>
+           <a href="sktl.tk">sktl.tk/aIdZ</a>
+
+           <a href="#" class="btn btn-primary m-3">copy</a>
+       </div>
+    </div>
+    </body>
+</html>
