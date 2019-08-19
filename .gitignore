@@ -3,3 +3,4 @@ __pycache__
 venv
 vue
 .idea
+/db.sqlite3
