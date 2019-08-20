@@ -13,58 +13,13 @@
   <nav class="navbar sticky-top" style="background-color: #823fa1;">
       <div class="btn-group container-fluid justify-content-start ">
           <a class="navbar-brand text-white" href="https://sktl.tk">Url shortener</a>
-          <div class="dropdown">
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-info">SignUp</a>
-              <div class="dropdown-menu">
-                    <form>
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"></span>
-                             </div>
+          {% if user.is_authenticated %}
+          <h4>Hi, {{ user.username }}</h4>
+          {% else %}
+          <a href="signup/" class="btn btn-info col-3 col-sm-2 col-md-1">SignUp</a>
 
-                            <input name="" class="form-control" placeholder="login" type="text">
-                        </div> <!-- form-group// -->
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"></span>
-                            </div>
-                            <input class="form-control" placeholder="password" type="password">
-                        </div> <!-- form-group// -->
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"></span>
-                            </div>
-                            <input class="form-control" placeholder="Repeat pass" type="password">
-                        </div> <!-- form-group// -->
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
-                        </div> <!-- form-group// -->
-                    </form>
-              </div>
-           </div>
-          <div class="dropdown">
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-outline-info"><b class="text-white">SignIn</b></a>
-              <div class="dropdown-menu">
-                    <form>
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"></span>
-                             </div>
-
-                            <input name="" class="form-control" placeholder="login" type="text">
-                        </div> <!-- form-group// -->
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"></span>
-                            </div>
-                            <input class="form-control" placeholder="password" type="password">
-                        </div> <!-- form-group// -->
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block"> Login  </button>
-                        </div> <!-- form-group// -->
-                    </form>
-              </div>
-           </div>
+          <a href="signin/" class="btn btn-outline-info col-3 col-sm-2 col-md-1"><b class="text-white">SignIn</b></a>
+          {% endif %}
       </div>
   </nav>
     <div class="card-header card">
@@ -72,8 +27,8 @@
             <form class="form-group input-group" method="POST">
                 {% csrf_token %}
                 <!--<input name="" class="form-control text-center" placeholder="Your URL" type="url">-->
-                {{ url_form }}
-                <button class="btn btn-primary" > shorten URL </button>
+                {{ form }}
+                <button class="btn btn-primary col-4 col-xs-3 col-md-2" > {{ form_button_label }} </button>
             </form>
 
         </div>
@@ -81,7 +36,7 @@
   {% if shortened_urls %}
   {% for shortened_url in shortened_urls %}
     <div class="card">
-        <div class="card-header">Your urls:</div>
+        <div class="card-header">Your url:</div>
         <div class="card-body row">
             <li class="col-6 col-xs-4 col-md-2">Your url: <a href="{{ shortened_url.full_url }}">{{ shortened_url.full_url }}</a></li>
             <input class="form-control text-center m-0 p-0 col-6 col-xs-4 col-md-2" value="{{ request.get_host }}{{ shortened_url.get_absolute_url }}"/>
