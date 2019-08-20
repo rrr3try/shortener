@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from hashid_field import HashidAutoField
 
@@ -15,3 +16,8 @@ class ShortenedUrl(models.Model):
     def update_counter(self):
         self.counter += 1
         self.save()
+
+    def get_absolute_url(self):
+        # [:-1] del unnecessary /
+        return reverse('shortener:resolver', args={str(self.id)})[:-1]
+

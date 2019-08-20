@@ -71,28 +71,24 @@
         <div class="justify-content-end col-xs-12 col-sm-10 col-md-8">
             <form class="form-group input-group" method="POST">
                 {% csrf_token %}
-                <input name="" class="form-control text-center" placeholder="Your URL" type="url">
+                <!--<input name="" class="form-control text-center" placeholder="Your URL" type="url">-->
                 {{ url_form }}
                 <button class="btn btn-primary" > shorten URL </button>
             </form>
 
         </div>
     </div>
+  {% if shortened_urls %}
+  {% for shortened_url in shortened_urls %}
     <div class="card">
-        <div class="card-header">Your urls</div>
+        <div class="card-header">Your urls:</div>
         <div class="card-body row">
-            <li class="col-6 col-xs-4 col-md-2">Your url</li>
-            <a href="sktl.tk">sktl.tk/aIdZ</a>
-            <a href="#" class="btn btn-primary m-3">copy</a>
+            <li class="col-6 col-xs-4 col-md-2">Your url: <a href="{{ shortened_url.full_url }}">{{ shortened_url.full_url }}</a></li>
+            <input class="form-control text-center m-0 p-0 col-6 col-xs-4 col-md-2" value="{{ request.get_host }}{{ shortened_url.get_absolute_url }}"/>
+            <a href="#" class="btn btn-primary m-5">copy</a>
         </div>
     </div>
-    <div class="card">
-       <div class="card-body row">
-           <li class="col-6 col-xs-4 col-md-2">Your url</li>
-           <a href="sktl.tk">sktl.tk/aIdZ</a>
-
-           <a href="#" class="btn btn-primary m-3">copy</a>
-       </div>
-    </div>
+  {% endfor %}
+  {% endif %}
     </body>
 </html>
