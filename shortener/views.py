@@ -23,19 +23,25 @@ class IndexView(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
+        user = request.user.username
         context = {'form_button_label': 'shorten URL'}
         if form.is_valid():
-            shortened_url = ShortenedUrl(full_url=form.cleaned_data['url'])
+            shortened_url = ShortenedUrl(full_url=form.cleaned_data['url'],
+                                         created_by_user=user)
             shortened_url.save()
-            context['shortened_urls'] = [shortened_url]
-
+            if len(user) > 0:
+                context['shortened_urls'] = ShortenedUrl.objects.all().filter(created_by_user=user).order_by('-date')
+            else:
+                context['shortened_urls'] = [shortened_url]
         context['form'] = URLForm()
         return render(request, self.template_name, context)
 
     def get(self, request):
         form = URLForm()
         context = {'form': form, 'shortened_urls': None, 'form_button_label': 'shorten URL'}
-        print(f"{request.user}")
+        if request.user.is_authenticated:
+            user = request.user.username
+            context['shortened_urls'] = ShortenedUrl.objects.all().filter(created_by_user=user).order_by('-date')
         return render(request, self.template_name, context)
 
 
