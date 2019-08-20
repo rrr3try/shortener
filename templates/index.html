@@ -1,6 +1,6 @@
 <!doctype html>
 {% load static %}
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,13 +12,13 @@
 
   <nav class="navbar sticky-top" style="background-color: #823fa1;">
       <div class="btn-group container-fluid justify-content-start ">
-          <a class="navbar-brand text-white" href="https://sktl.tk">Url shortener</a>
+          <a class="navbar-brand text-white" href="{{ request.scheme }}://{{ request.get_host }}">Url shortener</a>
           {% if user.is_authenticated %}
           <h4>Hi, {{ user.username }}</h4>
           {% else %}
-          <a href="signup/" class="btn btn-info col-3 col-sm-2 col-md-1">SignUp</a>
+          <a href="{{ request.scheme }}://{{ request.get_host }}/signup/" class="btn btn-info col-3 col-sm-2 col-md-1">SignUp</a>
 
-          <a href="signin/" class="btn btn-outline-info col-3 col-sm-2 col-md-1"><b class="text-white">SignIn</b></a>
+          <a href="{{ request.scheme }}://{{ request.get_host }}/signin/" class="btn btn-outline-info col-3 col-sm-2 col-md-1"><b class="text-white">SignIn</b></a>
           {% endif %}
       </div>
   </nav>
@@ -34,13 +34,14 @@
         </div>
     </div>
   {% if shortened_urls %}
+  <div class="card-header">Your urls:</div>
   {% for shortened_url in shortened_urls %}
     <div class="card">
-        <div class="card-header">Your url:</div>
         <div class="card-body row">
-            <li class="col-6 col-xs-4 col-md-2">Your url: <a href="{{ shortened_url.full_url }}">{{ shortened_url.full_url }}</a></li>
-            <input class="form-control text-center m-0 p-0 col-6 col-xs-4 col-md-2" value="{{ request.get_host }}{{ shortened_url.get_absolute_url }}"/>
-            <a href="#" class="btn btn-primary m-5">copy</a>
+            <li class="col-6 col-xs-4 col-md-2"><a href="{{ shortened_url.full_url }}">{{ shortened_url.full_url }}</a></li>
+            <input class="form-control text-center m-0 p-0 col-6 col-xs-4 col-md-2" value="{{ request.get_host }}{{ shortened_url.get_absolute_url }}" id="{{ shortened_url.pk }}"/>
+            <span class="form-control"> added: {{ shortened_url.date }} visited: {{ shortened_url.counter }}</span>
+
         </div>
     </div>
   {% endfor %}

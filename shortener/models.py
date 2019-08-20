@@ -9,6 +9,7 @@ class ShortenedUrl(models.Model):
     full_url = models.URLField(blank=False, max_length=1024)
     counter = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
+    created_by_user = models.CharField(blank=True, max_length=150)
 
     def get_full_url(self):
         return self.full_url
