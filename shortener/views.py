@@ -1,8 +1,9 @@
-from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.views import LoginView
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, CreateView
 
 from shortener.forms import URLForm
 from shortener.models import ShortenedUrl
@@ -45,21 +46,14 @@ class IndexView(View):
         return render(request, self.template_name, context)
 
 
-def auth(request, new_user=True):
-    button_label = request.get_full_path()[1:-1]
-    context = {'form_button_label': button_label}
-    data = request.POST if request.method == 'POST' else None
-    if new_user:
-        form = UserCreationForm(data=data)
-    else:
-        form = AuthenticationForm(request=request, data=data)
-    if form.is_valid():
-        if new_user:
-            user = form.save()
-        else:
-            user = form.get_user()
+class SignUpView(CreateView):
+    template_name = 'index.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('signin')
+    extra_context = {'form_button_label': 'Sign Up'}
 
-        login(request, user)
-        return redirect('shortener:index')
-    context['form'] = form.as_p()
-    return render(request, 'index.html', context)
+
+class SignInView(LoginView):
+    template_name = 'index.html'
+    form_class = AuthenticationForm
+    extra_context = {'form_button_label': 'Sign In'}
