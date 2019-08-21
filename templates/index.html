@@ -12,13 +12,13 @@
 
   <nav class="navbar sticky-top" style="background-color: #823fa1;">
       <div class="btn-group container-fluid justify-content-start ">
-          <a class="navbar-brand text-white" href="{{ request.scheme }}://{{ request.get_host }}">Url shortener</a>
+          <a class="navbar-brand text-white" href="{% url 'shortener:index' %}">Url shortener</a>
           {% if user.is_authenticated %}
           <h4>Hi, {{ user.username }}</h4>
           {% else %}
-          <a href="{{ request.scheme }}://{{ request.get_host }}/signup/" class="btn btn-info col-3 col-sm-2 col-md-1">SignUp</a>
+          <a href="{% url 'signup' %}" class="btn btn-info col-3 col-sm-2 col-md-1">SignUp</a>
 
-          <a href="{{ request.scheme }}://{{ request.get_host }}/signin/" class="btn btn-outline-info col-3 col-sm-2 col-md-1"><b class="text-white">SignIn</b></a>
+          <a href="{% url 'signin' %}" class="btn btn-outline-info col-3 col-sm-2 col-md-1"><b class="text-white">SignIn</b></a>
           {% endif %}
       </div>
   </nav>
@@ -39,7 +39,7 @@
     <div class="card">
         <div class="card-body row">
             <li class="col-6 col-xs-4 col-md-2"><a href="{{ shortened_url.full_url }}">{{ shortened_url.full_url }}</a></li>
-            <input class="form-control text-center m-0 p-0 col-6 col-xs-4 col-md-2" value="{{ request.get_host }}{{ shortened_url.get_absolute_url }}" id="{{ shortened_url.pk }}"/>
+            <input onclick="this.select()" class="form-control text-center m-0 p-0 col-6 col-xs-4 col-md-2" value="{{ request.get_host }}{{ shortened_url.get_absolute_url }}" id="{{ shortened_url.pk }}"/>
             <span class="form-control"> added: {{ shortened_url.date }} visited: {{ shortened_url.counter }}</span>
 
         </div>
