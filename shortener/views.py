@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
+from django.db.models import F
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import View
@@ -14,7 +15,7 @@ class URLResolver(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         shortened_url: ShortenedUrl = get_object_or_404(ShortenedUrl, pk=kwargs['pk'])
-        shortened_url.update_counter()
+        ShortenedUrl.objects.filter(pk=kwargs['pk']).update(counter=F('counter')+1)
         return shortened_url.get_full_url()
 
 
