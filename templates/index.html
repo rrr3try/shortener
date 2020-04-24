@@ -6,45 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static "css/index.css" %}" />
-    <title>Hello, Stepan ;)</title>
+    <title>Hello world</title>
   </head>
   <body>
 
   <nav class="navbar sticky-top" style="background-color: #823fa1;">
-      <div class="btn-group container-fluid justify-content-start ">
+
+      <div class="btn-group container-fluid justify-content-right ">
           <a class="navbar-brand text-white" href="{% url 'shortener:index' %}">Url shortener</a>
           {% if user.is_authenticated %}
-          <h4>Hi, {{ user.username }}</h4>
+          <div class="text-white text-small text-mute col-3 col-sm-2 col-md-1">{{ user.username }}</div>
+          <form class="col-3 col-sm-2 col-md-2 mx-1" action="{% url 'shortener:logout' %}?next={{ request.path | urlencode }}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-light">Log out</button>
+          </form>
           {% else %}
-          <a href="{% url 'signup' %}" class="btn btn-info col-3 col-sm-2 col-md-1">SignUp</a>
-
-          <a href="{% url 'signin' %}" class="btn btn-outline-info col-3 col-sm-2 col-md-1"><b class="text-white">SignIn</b></a>
+          <div class="form-group  col-6 col-sm-4 col-md-3">
+          <a href="{% url 'signup' %}" class="btn btn-info mx-1 ">SignUp</a>
+          <a href="{% url 'signin' %}" class="btn btn-outline-info mx-1"><b class="text-white">SignIn</b></a>
+               </div>
           {% endif %}
       </div>
   </nav>
+  <div class="container">
+  <div class="card border-0 shadow my-5">
+    <div class="card-body p-5">
     <div class="card-header card">
-        <div class="justify-content-end col-xs-12 col-sm-10 col-md-8">
+        <div class="col-sm-6 col-md-5 col-xs-12 my-2">
             <form class="form-group input-group" method="POST">
                 {% csrf_token %}
-                <!--<input name="" class="form-control text-center" placeholder="Your URL" type="url">-->
                 {{ form }}
-                <button class="btn btn-primary col-4 col-xs-3 col-md-2" > {{ form_button_label }} </button>
+                <button class="btn btn-primary col-5 col-xs-4 col-md-3 mx-2" > {{ form_button_label }} </button>
             </form>
 
         </div>
     </div>
   {% if shortened_urls %}
-  <div class="card-header">Your urls:</div>
+        <div class="card-header my-3"><h4>Your urls:</h4>
+            <div class="row">
   {% for shortened_url in shortened_urls %}
-    <div class="card">
-        <div class="card-body row">
-            <li class="col-6 col-xs-4 col-md-2"><a href="{{ shortened_url.full_url }}">{{ shortened_url.full_url }}</a></li>
-            <input onclick="this.select()" class="form-control text-center m-0 p-0 col-6 col-xs-4 col-md-2" value="{{ request.get_host }}{{ shortened_url.get_absolute_url }}" id="{{ shortened_url.pk }}"/>
-            <span class="form-control"> added: {{ shortened_url.date }} visited: {{ shortened_url.counter }}</span>
-
-        </div>
+    <div class="col-sm-6 col-md-4 col-xs-12 my-2">
+    <div class="card text-center shadow">
+    <div class="card-header">
+        <a href="{{ shortened_url.full_url }}">{{ shortened_url.full_url }}</a>
     </div>
+    <div class="card-body">
+        <input onclick="this.select()" class="form-control text-center" value="{{ request.get_host }}{{ shortened_url.get_absolute_url }}" id="{{ shortened_url.pk }}"/>
+    </div>
+    <span class="card-footer text-muted"> added: {{ shortened_url.date }} visited: {{ shortened_url.counter }}</span>
+
+    </div>
+        </div>
   {% endfor %}
+                </div>
   {% endif %}
+</div>
+        </div>
+  </div>
+</div>
+  <script>
+
+</script>
     </body>
 </html>
