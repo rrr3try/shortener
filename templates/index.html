@@ -16,14 +16,14 @@
           <a class="navbar-brand text-white" href="{% url 'shortener:index' %}">Url shortener</a>
           {% if user.is_authenticated %}
           <div class="text-white text-small text-mute col-3 col-sm-2 col-md-1">{{ user.username }}</div>
-          <form class="col-3 col-sm-2 col-md-2 mx-1" action="{% url 'shortener:logout' %}?next={{ request.path | urlencode }}" method="post">
+          <form class="col-3 col-sm-2 col-md-2 mx-1" action="{% url 'auth:sign-out' %}?next={{ request.path | urlencode }}" method="post">
             {% csrf_token %}
-            <button class="btn btn-light">Log out</button>
+            <button class="btn btn-light">Sign out</button>
           </form>
           {% else %}
           <div class="form-group  col-6 col-sm-4 col-md-3">
-          <a href="{% url 'signup' %}" class="btn btn-info mx-1 ">SignUp</a>
-          <a href="{% url 'signin' %}" class="btn btn-outline-info mx-1"><b class="text-white">SignIn</b></a>
+          <a href="{% url 'auth:signup' %}" class="btn btn-info mx-1 ">SignUp</a>
+          <a href="{% url 'auth:signin' %}" class="btn btn-outline-info mx-1"><b class="text-white">SignIn</b></a>
                </div>
           {% endif %}
       </div>
@@ -35,7 +35,7 @@
         <div class="col-sm-6 col-md-5 col-xs-12 my-2">
             <form class="form-group input-group" method="POST">
                 {% csrf_token %}
-                {{ form }}
+                {{ form.as_p }}
                 <button class="btn btn-primary col-5 col-xs-4 col-md-3 mx-2" > {{ form_button_label }} </button>
             </form>
 

@@ -1,5 +1,4 @@
 from django.urls import path, re_path
-from django.views import generic
 
 from shortener import views
 

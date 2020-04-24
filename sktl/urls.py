@@ -15,11 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from shortener.views import SignUpView, SignInView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('signin/', SignInView.as_view(), {"new_user": False}, name='signin'),
-    path('signup/', SignUpView.as_view(), name='signup'),
+    path('', include('auth.urls')),
     path('', include('shortener.urls')),
 ]
